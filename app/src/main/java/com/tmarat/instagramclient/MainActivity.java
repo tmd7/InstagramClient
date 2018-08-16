@@ -11,8 +11,6 @@ import com.tmarat.instagramclient.ui.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-  private Toolbar toolbar;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 
@@ -21,15 +19,27 @@ public class MainActivity extends AppCompatActivity {
 
     initToolbar();
 
-    startFragment(R.id.main_container, MainFragment.init());
+    startFragment(R.id.main_container, new MainFragment(), false);
   }
 
-  private void startFragment(int resId, Fragment fragment) {
+  private void startFragment(int resId, Fragment fragment, boolean addToBackStack) {
 
-    getSupportFragmentManager()
-        .beginTransaction()
-        .replace(resId, fragment)
-        .commit();
+    if (addToBackStack) {
+
+      getSupportFragmentManager()
+          .beginTransaction()
+          .replace(resId, fragment)
+          .addToBackStack(null)
+          .commit();
+    } else {
+
+      getSupportFragmentManager()
+          .beginTransaction()
+          .replace(resId, fragment)
+          .commit();
+    }
+
+
   }
 
   @Override
@@ -46,19 +56,16 @@ public class MainActivity extends AppCompatActivity {
     switch (item.getItemId()) {
 
       case R.id.action_settings :
-        startFragment(R.id.main_container, SettingsFragment.init());
+        startFragment(R.id.main_container, new SettingsFragment(), true);
         break;
     }
 
     return super.onOptionsItemSelected(item);
   }
 
-  /**
-   * Init toolbar
-   * */
   private void initToolbar() {
 
-    toolbar = (Toolbar) findViewById(R.id.toolbar);
+    Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
   }
 }

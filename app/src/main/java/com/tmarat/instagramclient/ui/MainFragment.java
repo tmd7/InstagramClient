@@ -11,16 +11,8 @@ import com.tmarat.instagramclient.R;
 
 public final class MainFragment extends Fragment {
 
-  /**
-   * Constructor is empty, using lazy init
-   * */
   public MainFragment() {
   }
-
-  public static MainFragment init() {
-
-    return new MainFragment();
-}
 
   @Nullable @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,

@@ -11,20 +11,17 @@ import com.tmarat.instagramclient.R;
 
 public final class SettingsFragment extends Fragment {
 
-  /**
-   * Constructor is empty, using lazy init
-   * */
-  public SettingsFragment() {
-  }
-
-  public static SettingsFragment init() {
-    return new SettingsFragment();
-  }
-
-  @Nullable @Override
+  @NonNull @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
+
     View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+    initUI(view);
+
     return view;
+  }
+
+  private void initUI(View view) {
   }
 }
