@@ -9,25 +9,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.tmarat.instagramclient.R;
 
-public final class MainFragment extends Fragment {
+public final class SettingsFragment extends Fragment {
 
   /**
    * Constructor is empty, using lazy init
    * */
-  public MainFragment() {
+  public SettingsFragment() {
   }
 
-  public static MainFragment init() {
-
-    return new MainFragment();
-}
+  public static SettingsFragment init() {
+    return new SettingsFragment();
+  }
 
   @Nullable @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-
-    View view = inflater.inflate(R.layout.fragment_main, container, false);
-
+    View view = inflater.inflate(R.layout.fragment_settings, container, false);
     return view;
   }
 }
