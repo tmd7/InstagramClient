@@ -13,6 +13,20 @@
     <item name="windowNoTitle">true</item>
   </style>
 
+  <!-- Black application theme. -->
+  <style name="BlackTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="colorPrimary">#212121</item>
+    <item name="colorPrimaryDark">#000000</item>
+    <item name="colorAccent">#D50000</item>
+  </style>
+
+  <!-- Red application theme. -->
+  <style name="RedTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="colorPrimary">#B71C1C</item>
+    <item name="colorPrimaryDark">#000000</item>
+    <item name="colorAccent">#FFD600</item>
+  </style>
+
   <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
   <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
