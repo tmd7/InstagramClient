@@ -1,13 +1,13 @@
 package com.tmarat.instagramclient;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.tmarat.instagramclient.ui.MainFragment;
 import com.tmarat.instagramclient.ui.SettingsFragment;
+import com.tmarat.instagramclient.util.ActivityUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,27 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     initToolbar();
 
-    startFragment(R.id.main_container, new MainFragment(), false);
-  }
-
-  private void startFragment(int resId, Fragment fragment, boolean addToBackStack) {
-
-    if (addToBackStack) {
-
-      getSupportFragmentManager()
-          .beginTransaction()
-          .replace(resId, fragment)
-          .addToBackStack(null)
-          .commit();
-    } else {
-
-      getSupportFragmentManager()
-          .beginTransaction()
-          .replace(resId, fragment)
-          .commit();
-    }
-
-
+    ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+        new MainFragment(), R.id.main_container);
   }
 
   @Override
@@ -55,8 +36,12 @@ public class MainActivity extends AppCompatActivity {
 
     switch (item.getItemId()) {
 
-      case R.id.action_settings :
-        startFragment(R.id.main_container, new SettingsFragment(), true);
+      case R.id.action_settings:
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+            new SettingsFragment(), R.id.main_container, null);
+        break;
+
+      default:
         break;
     }
 
