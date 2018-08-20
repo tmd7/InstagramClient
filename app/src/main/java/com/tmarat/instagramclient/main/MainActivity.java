@@ -19,6 +19,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
         MainFragment.newInstance(), R.id.main_container);
+
+    // TODO: 20.08.2018 getPresenter() and doing something
   }
 
   @Override protected int getContentResource() {
@@ -29,6 +31,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.menu_main, menu);
     return true;
+  }
+
+  @Override protected void injectDependencies() {
+
   }
 
   @Override protected void onDestroy() {
