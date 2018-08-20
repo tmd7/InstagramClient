@@ -1,10 +1,11 @@
-package com.tmarat.instagramclient;
+package com.tmarat.instagramclient.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.tmarat.instagramclient.R;
 import com.tmarat.instagramclient.base.BaseActivity;
 import com.tmarat.instagramclient.ui.MainFragment;
 import com.tmarat.instagramclient.ui.SettingsFragment;

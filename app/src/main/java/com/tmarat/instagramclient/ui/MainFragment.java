@@ -8,8 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.tmarat.instagramclient.R;
+import com.tmarat.instagramclient.base.BaseView;
 
-public final class MainFragment extends Fragment {
+public final class MainFragment extends Fragment implements BaseView {
 
   public MainFragment() {
   }

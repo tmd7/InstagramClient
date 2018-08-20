@@ -1,4 +1,4 @@
-package com.tmarat.instagramclient;
+package com.tmarat.instagramclient.main;
 
 import com.tmarat.instagramclient.base.BaseMvpPresenter;
 import com.tmarat.instagramclient.base.BaseView;
