@@ -9,7 +9,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * This provides methods to help Activities load their UI.
  */
-public class ActivityUtils {
+public final class ActivityUtils {
 
   public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
       @NonNull Fragment fragment, int frameId) {
@@ -25,7 +25,7 @@ public class ActivityUtils {
 
   /* Note: add fragment to back stack */
   public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
-      @NonNull Fragment fragment, int frameId, @Nullable String name) {
+      @NonNull Fragment fragment, int frameId, @Nullable String backStackName) {
 
     checkNotNull(fragmentManager);
     checkNotNull(fragment);
@@ -33,7 +33,7 @@ public class ActivityUtils {
     fragmentManager
         .beginTransaction()
         .replace(frameId, fragment)
-        .addToBackStack(name)
+        .addToBackStack(backStackName)
         .commit();
   }
 }

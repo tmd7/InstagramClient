@@ -11,12 +11,15 @@ import com.tmarat.instagramclient.R;
 
 public final class SettingsFragment extends Fragment {
 
+  public static SettingsFragment newInstance() {
+    return new SettingsFragment();
+  }
+
   @NonNull @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
 
     View view = inflater.inflate(R.layout.fragment_settings, container, false);
-
     initUI(view);
 
     return view;
