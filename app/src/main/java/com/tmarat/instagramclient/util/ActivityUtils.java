@@ -11,7 +11,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public final class ActivityUtils {
 
-  public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
+  public static void replaceFragmentToActivity(@NonNull FragmentManager fragmentManager,
       @NonNull Fragment fragment, int frameId) {
 
     checkNotNull(fragmentManager);
@@ -24,7 +24,7 @@ public final class ActivityUtils {
   }
 
   /* Note: add fragment to back stack */
-  public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
+  public static void replaceFragmentToActivity(@NonNull FragmentManager fragmentManager,
       @NonNull Fragment fragment, int frameId, @Nullable String backStackName) {
 
     checkNotNull(fragmentManager);

@@ -17,10 +17,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     setUpToolbar();
 
-    ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
-        MainFragment.newInstance(), R.id.main_container);
-
-    // TODO: 20.08.2018 getPresenter() and doing something
+    if (state == null) {
+      ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
+          MainFragment.newInstance(), R.id.main_container);
+    }
   }
 
   @Override protected int getContentResource() {
@@ -39,7 +39,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
   @Override protected void onDestroy() {
     super.onDestroy();
-
   }
 
   @Override
@@ -48,7 +47,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     switch (item.getItemId()) {
 
       case R.id.action_settings:
-        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+        ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
             SettingsFragment.newInstance(), R.id.main_container, null);
         break;
 

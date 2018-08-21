@@ -15,6 +15,11 @@ public final class SettingsFragment extends Fragment {
     return new SettingsFragment();
   }
 
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    //setRetainInstance(true);
+  }
+
   @NonNull @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
