@@ -8,14 +8,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.tmarat.instagramclient.R;
 import com.tmarat.instagramclient.ui.MainFragment;
-import com.tmarat.instagramclient.ui.SettingsFragment;
+import com.tmarat.instagramclient.settings.SettingsFragment;
 import com.tmarat.instagramclient.util.ActivityUtils;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
+    setContentView(R.layout.activity_main);
     setUpToolbar();
 
     if (savedInstanceState == null) {
