@@ -45,7 +45,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
   public boolean onOptionsItemSelected(MenuItem item) {
 
     switch (item.getItemId()) {
-
       case R.id.action_settings:
         ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
             SettingsFragment.newInstance(), R.id.main_container, null);
