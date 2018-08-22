@@ -8,7 +8,7 @@
 
   <TextView
       android:gravity="center"
-      android:text="TODO: A grid with color theme"
+      android:text="TODO: A grid with color themes"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       />

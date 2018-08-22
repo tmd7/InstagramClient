@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.tmarat.instagramclient.R;
-import com.tmarat.instagramclient.ui.MainFragment;
 import com.tmarat.instagramclient.settings.SettingsFragment;
 import com.tmarat.instagramclient.util.ActivityUtils;
 
