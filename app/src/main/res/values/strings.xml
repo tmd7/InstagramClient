@@ -7,4 +7,5 @@
   <string name="theme_changed">The theme has changed</string>
   <string name="bottom_sheet_peek_name">MODE</string>
   <string name="night_mode">Night mode</string>
+  <string name="photo_has_added">Photo has added</string>
 </resources>

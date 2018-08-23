@@ -10,12 +10,12 @@ import com.tmarat.instagramclient.R;
 import com.tmarat.instagramclient.settings.SettingsFragment;
 import com.tmarat.instagramclient.util.ActivityUtils;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View {
+public class MainActivity extends AppCompatActivity {
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    setUpToolbar();
+    setupToolbar();
 
     if (savedInstanceState == null) {
       ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     return super.onOptionsItemSelected(item);
   }
 
-  private void setUpToolbar() {
+  private void setupToolbar() {
     Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
   }

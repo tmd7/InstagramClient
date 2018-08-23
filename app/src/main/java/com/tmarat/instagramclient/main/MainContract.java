@@ -8,11 +8,12 @@ public interface MainContract {
   // Action callbacks. Activity/Fragment will implement
   interface View extends BaseView {
 
+    void showSnackbar();
   }
 
   // User actions. Presenter will implement
   interface Presenter extends BaseMvpPresenter<MainContract.View> {
 
-
+    void addPhoto();
   }
 }
