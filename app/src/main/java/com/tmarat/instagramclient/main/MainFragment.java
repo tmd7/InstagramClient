@@ -1,5 +1,6 @@
 package com.tmarat.instagramclient.main;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,11 +9,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import com.tmarat.instagramclient.R;
 
 public final class MainFragment extends Fragment implements MainContract.View {
 
-  MainContract.Presenter presenter;
+  private MainContract.Presenter presenter;
+
+  private ImageView imageView;
 
   public static MainFragment newInstance() {
     return new MainFragment();
@@ -43,16 +47,26 @@ public final class MainFragment extends Fragment implements MainContract.View {
     view.findViewById(R.id.float_bt_main_fragment)
         .setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        presenter.addPhoto();
+        presenter.addPhoto(getContext(), getActivity());
       }
     });
+
+    imageView = view.findViewById(R.id.image_view_test);
   }
 
-  @Override public void showSnackbar() {
+  @Override public void showSnackbar(int resId) {
     if (getView()!=null) {
-      Snackbar snackbar = Snackbar.make(getView(), R.string.photo_has_added, Snackbar.LENGTH_SHORT);
+      Snackbar snackbar = Snackbar.make(getView(), resId, Snackbar.LENGTH_SHORT);
       snackbar.dismiss();
       snackbar.show();
+    }
+  }
+
+  @Override public void showImage(String currentPhotoPath) {
+    if (currentPhotoPath != null) {
+      imageView.setImageURI(Uri.parse(currentPhotoPath));
+    } else {
+      showSnackbar(R.string.error);
     }
   }
 }
