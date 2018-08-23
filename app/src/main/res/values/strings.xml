@@ -4,4 +4,7 @@
   <string name="red_theme">black red theme</string>
   <string name="black_theme">black white theme</string>
   <string name="settings">Settings</string>
+  <string name="theme_changed">The theme has changed</string>
+  <string name="bottom_sheet_peek_name">MODE</string>
+  <string name="night_mode">Night mode</string>
 </resources>

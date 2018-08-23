@@ -1,4 +1,4 @@
-package com.tmarat.instagramclient.ui;
+package com.tmarat.instagramclient.main;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
