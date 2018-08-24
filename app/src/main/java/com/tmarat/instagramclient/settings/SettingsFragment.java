@@ -15,6 +15,8 @@ import com.tmarat.instagramclient.R;
 
 public final class SettingsFragment extends Fragment implements SettingsContract.View {
 
+  SettingsFragment fragment;
+
   private SettingsContract.Presenter presenter;
 
   public static SettingsFragment newInstance() {
