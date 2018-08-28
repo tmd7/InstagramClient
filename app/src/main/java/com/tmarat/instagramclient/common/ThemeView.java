@@ -42,6 +42,10 @@ public class ThemeView extends View {
     init();
   }
 
+  public void setTheme(Theme theme) {
+    this.theme = theme;
+  }
+
   private void init() {
 
     boarderPaint = new Paint();
