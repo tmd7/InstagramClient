@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity
     switch (item.getItemId()) {
       case R.id.action_settings:
         ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
-            SettingsFragment.newInstance(), R.id.main_container, null);
+            SettingsFragment.newInstance(), R.id.main_container);
         break;
 
       default:
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
 
       case R.id.nav_settings:
         ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
-            SettingsFragment.newInstance(), R.id.main_container, null);
+            SettingsFragment.newInstance(), R.id.main_container);
         break;
 
       default:
