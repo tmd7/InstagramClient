@@ -15,15 +15,14 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 import com.tmarat.instagramclient.R;
-import com.tmarat.instagramclient.adapter.ThemeAdapter;
+import com.tmarat.instagramclient.settings.adapter.RecyclerViewClickListener;
+import com.tmarat.instagramclient.settings.adapter.ThemeAdapter;
 import com.tmarat.instagramclient.util.ThemeUtil;
 
 public final class SettingsFragment extends Fragment implements SettingsContract.View {
 
   private static final int SPAN_COUNT = 4;
   private SettingsContract.Presenter presenter;
-
-  private RecyclerView recyclerView;
 
   public static SettingsFragment newInstance() {
     return new SettingsFragment();
@@ -60,12 +59,19 @@ public final class SettingsFragment extends Fragment implements SettingsContract
       }
     });
 
-    recyclerView = view.findViewById(R.id.recycler_view_settings);
+    RecyclerView recyclerView = view.findViewById(R.id.recycler_view_settings);
     recyclerView.setHasFixedSize(true);
     RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(), SPAN_COUNT);
     recyclerView.setLayoutManager(manager);
     recyclerView.setItemAnimator(new DefaultItemAnimator());
-    ThemeAdapter adapter = new ThemeAdapter(ThemeUtil.getThemeList());
+    ThemeAdapter adapter = new ThemeAdapter(ThemeUtil.getThemeList(),
+
+        new RecyclerViewClickListener() {
+          @Override public void onClick(int position) {
+
+            // TODO: 29.08.2018 itemOnclick
+          }
+        });
     recyclerView.setAdapter(adapter);
   }
 

@@ -1,4 +1,4 @@
-package com.tmarat.instagramclient.adapter;
+package com.tmarat.instagramclient.settings.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +13,13 @@ import java.util.List;
 public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder> {
 
   private List<Theme> themeList;
+  private RecyclerViewClickListener recyclerViewClickListener;
 
-  public ThemeAdapter(List<Theme> themeList) {
+  public ThemeAdapter(List<Theme> themeList,
+      RecyclerViewClickListener recyclerViewClickListener) {
+
     this.themeList = themeList;
+    this.recyclerViewClickListener = recyclerViewClickListener;
   }
 
   @NonNull @Override
@@ -44,7 +48,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
     return themeList.size();
   }
 
-  public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+  public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private ThemeView themeView;
 
@@ -57,6 +61,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
 
     @Override public void onClick(View v) {
       // TODO: 28.08.2018 some action
+      recyclerViewClickListener.onClick(getAdapterPosition());
     }
   }
 }
