@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -62,9 +61,9 @@ public final class SettingsFragment extends Fragment implements SettingsContract
 
     RecyclerView recyclerView = view.findViewById(R.id.recycler_view_settings);
     recyclerView.setHasFixedSize(true);
-    RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(), SPAN_COUNT);
+    GridLayoutManager manager = new GridLayoutManager(getContext(), SPAN_COUNT);
     recyclerView.setLayoutManager(manager);
-    recyclerView.setItemAnimator(new DefaultItemAnimator());
+
     ThemeAdapter adapter = new ThemeAdapter(ThemeUtil.getThemeList(),
 
         new RecyclerViewClickListener() {
@@ -73,6 +72,7 @@ public final class SettingsFragment extends Fragment implements SettingsContract
             presenter.onClickItemRecyclerView(getActivity(), position);
           }
         });
+
     recyclerView.setAdapter(adapter);
   }
 

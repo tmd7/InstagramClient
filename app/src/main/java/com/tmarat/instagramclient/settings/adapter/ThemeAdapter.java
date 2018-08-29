@@ -26,8 +26,8 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
   @NonNull @Override
   public ThemeAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-      View itemView = LayoutInflater.from(parent.getContext())
-          .inflate(R.layout.item_settings, parent, false);
+    View itemView = LayoutInflater.from(parent.getContext())
+        .inflate(R.layout.item_settings, parent, false);
 
     return new ThemeAdapter.MyViewHolder(itemView);
   }
