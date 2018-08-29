@@ -51,7 +51,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
     public MyViewHolder(View itemView) {
 
       super(itemView);
-      themeView = itemView.findViewById(R.id.recycler_view_settings);
+      themeView = itemView.findViewById(R.id.item_theme_view);
       themeView.setOnClickListener(this);
     }
 

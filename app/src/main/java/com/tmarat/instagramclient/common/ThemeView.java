@@ -44,6 +44,7 @@ public class ThemeView extends View {
 
   public void setTheme(Theme theme) {
     this.theme = theme;
+    init();
   }
 
   private void init() {
