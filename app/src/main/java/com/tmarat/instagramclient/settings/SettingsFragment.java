@@ -23,6 +23,7 @@ public final class SettingsFragment extends Fragment implements SettingsContract
 
   private static final int SPAN_COUNT = 4;
   private SettingsContract.Presenter presenter;
+  private static final String TAG = SettingsFragment.class.getSimpleName();
 
   public static SettingsFragment newInstance() {
     return new SettingsFragment();
@@ -69,14 +70,14 @@ public final class SettingsFragment extends Fragment implements SettingsContract
         new RecyclerViewClickListener() {
           @Override public void onClick(int position) {
 
-            // TODO: 29.08.2018 itemOnclick
+            presenter.onClickItemRecyclerView(getActivity(), position);
           }
         });
     recyclerView.setAdapter(adapter);
   }
 
   @Override public void showToast(int reId) {
-    Toast t = Toast.makeText(getContext(), reId, Toast.LENGTH_SHORT);
+    Toast t = Toast.makeText(getContext(), reId, Toast.LENGTH_LONG);
     t.setGravity(Gravity.CENTER, 0, 0);
     t.show();
   }

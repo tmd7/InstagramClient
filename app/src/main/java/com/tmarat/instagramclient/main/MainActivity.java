@@ -10,8 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.tmarat.instagramclient.R;
+import com.tmarat.instagramclient.model.Preferences;
 import com.tmarat.instagramclient.settings.SettingsFragment;
 import com.tmarat.instagramclient.util.ActivityUtils;
+import com.tmarat.instagramclient.util.ConstantsUtil;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -19,6 +21,8 @@ public class MainActivity extends AppCompatActivity
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    int themeResId = new Preferences().getPreferences(this, ConstantsUtil.THEME_KEY);
+    setTheme(themeResId);
     setContentView(R.layout.activity_main);
 
     setNavigationDrawer();

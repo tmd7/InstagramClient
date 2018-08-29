@@ -12,6 +12,7 @@ import java.util.List;
 
 public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder> {
 
+  private static final String TAG = ThemeAdapter.class.getSimpleName();
   private List<Theme> themeList;
   private RecyclerViewClickListener recyclerViewClickListener;
 
