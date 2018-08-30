@@ -15,9 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.tmarat.instagramclient.R;
+import com.tmarat.instagramclient.model.Photo;
+import com.tmarat.instagramclient.util.ConstantsUtil;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
@@ -28,6 +31,7 @@ public final class MainFragment extends Fragment implements MainContract.View {
   private MainContract.Presenter presenter;
   private Uri photoURI;
   private ImageView imageView;
+  private ArrayList<Photo> photoList;
 
   public static MainFragment newInstance() {
     return new MainFragment();
@@ -36,6 +40,12 @@ public final class MainFragment extends Fragment implements MainContract.View {
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     presenter = new MainPresenter();
+    photoList = new ArrayList<>();
+
+    if (savedInstanceState != null) {
+      /* Note: get photoList from a bundle */
+      photoList = savedInstanceState.getParcelableArrayList(ConstantsUtil.PHOTO_PARCELABLE_KEY);
+    }
   }
 
   @NonNull @Override
@@ -57,18 +67,30 @@ public final class MainFragment extends Fragment implements MainContract.View {
 
     view.findViewById(R.id.float_bt_main_fragment)
         .setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        dispatchTakePictureIntent();
-      }
-    });
+          @Override public void onClick(View v) {
+            dispatchTakePictureIntent();
+          }
+        });
 
     imageView = view.findViewById(R.id.image_view_test);
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
     if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+      //imageView for testing
       imageView.setImageURI(photoURI);
+
+      /* Note: puts uri to the photo obj and adds to the photoList */
+      Photo photo = new Photo(photoURI, false);
+      photoList.add(photo);
     }
+  }
+
+  @Override public void onSaveInstanceState(@NonNull Bundle outState) {
+    /* Note: puts the photoList to a bundle */
+    outState.putParcelableArrayList(ConstantsUtil.PHOTO_PARCELABLE_KEY, photoList);
+    super.onSaveInstanceState(outState);
   }
 
   private void dispatchTakePictureIntent() {
@@ -114,7 +136,7 @@ public final class MainFragment extends Fragment implements MainContract.View {
   }
 
   @Override public void showSnackbar(int resId) {
-    if (getView()!=null) {
+    if (getView() != null) {
       Snackbar snackbar = Snackbar.make(getView(), resId, Snackbar.LENGTH_SHORT);
       snackbar.dismiss();
       snackbar.show();
