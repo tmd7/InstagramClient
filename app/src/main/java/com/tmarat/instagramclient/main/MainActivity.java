@@ -6,25 +6,21 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.tmarat.instagramclient.R;
 import com.tmarat.instagramclient.about.AboutActivity;
-import com.tmarat.instagramclient.model.Preferences;
+import com.tmarat.instagramclient.base.BaseActivity;
 import com.tmarat.instagramclient.settings.SettingsFragment;
 import com.tmarat.instagramclient.util.ActivityUtils;
-import com.tmarat.instagramclient.util.ConstantsUtil;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    int themeResId = new Preferences().getPreferences(this, ConstantsUtil.THEME_KEY);
-    setTheme(themeResId);
     setContentView(R.layout.activity_main);
 
     setNavigationDrawer();

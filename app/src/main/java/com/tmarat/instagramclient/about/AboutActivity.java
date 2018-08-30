@@ -3,14 +3,14 @@ package com.tmarat.instagramclient.about;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
-import android.support.v7.app.AppCompatActivity;
 import android.transition.ChangeBounds;
 import android.transition.TransitionManager;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 import com.tmarat.instagramclient.R;
+import com.tmarat.instagramclient.base.BaseActivity;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends BaseActivity {
 
   private boolean show = false;
 
