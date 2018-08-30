@@ -78,6 +78,7 @@ public final class MainFragment extends Fragment implements MainContract.View {
 
     imageView = view.findViewById(R.id.image_view_test);
 
+    // TODO: 30.08.2018 get list with URIes and pass to Recycler view which will be in this Fragment
     //setting image in imageView is for testing
     if (!photoList.isEmpty()) {
       imageView.setImageURI(photoList.get(FIRST_ELEMENT).getUri());
@@ -93,6 +94,8 @@ public final class MainFragment extends Fragment implements MainContract.View {
 
       //setting image in imageView is for testing
       imageView.setImageURI(photoURI);
+
+      // TODO: 30.08.2018 write uri in database
     }
   }
 
