@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,9 @@ import static android.app.Activity.RESULT_OK;
 import static com.tmarat.instagramclient.util.ConstantsUtil.REQUEST_TAKE_PHOTO;
 
 public final class MainFragment extends Fragment implements MainContract.View {
+
+  private static final String TAG = MainFragment.class.getSimpleName();
+  private static final int FIRST_ELEMENT = 0;
 
   private MainContract.Presenter presenter;
   private Uri photoURI;
@@ -73,28 +77,34 @@ public final class MainFragment extends Fragment implements MainContract.View {
         });
 
     imageView = view.findViewById(R.id.image_view_test);
+
+    //setting image in imageView is for testing
+    if (!photoList.isEmpty()) {
+      imageView.setImageURI(photoList.get(FIRST_ELEMENT).getUri());
+    }
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+    Log.d(TAG, "onActivityResult: ");
     if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-      //imageView for testing
-      imageView.setImageURI(photoURI);
-
       /* Note: puts uri to the photo obj and adds to the photoList */
       Photo photo = new Photo(photoURI, false);
       photoList.add(photo);
+
+      //setting image in imageView is for testing
+      imageView.setImageURI(photoURI);
     }
   }
 
   @Override public void onSaveInstanceState(@NonNull Bundle outState) {
+    Log.d(TAG, "onSaveInstanceState: ");
     /* Note: puts the photoList to a bundle */
     outState.putParcelableArrayList(ConstantsUtil.PHOTO_PARCELABLE_KEY, photoList);
     super.onSaveInstanceState(outState);
   }
 
   private void dispatchTakePictureIntent() {
-
+    Log.d(TAG, "dispatchTakePictureIntent: ");
     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
     // Ensure that there's a camera activity to handle the intent
@@ -120,6 +130,7 @@ public final class MainFragment extends Fragment implements MainContract.View {
   }
 
   private File createImageFile() throws IOException {
+    Log.d(TAG, "createImageFile: ");
     // Create an image file name
     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
     String imageFileName = "JPEG_" + timeStamp + "_";
