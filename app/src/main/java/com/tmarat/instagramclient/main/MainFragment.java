@@ -10,12 +10,15 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.tmarat.instagramclient.R;
+import com.tmarat.instagramclient.main.adapter.PhotoAdapter;
 import com.tmarat.instagramclient.model.Preferences;
 import java.io.File;
 import java.io.IOException;
@@ -71,7 +74,12 @@ public final class MainFragment extends Fragment implements MainContract.View {
           }
         });
 
-    imageView = view.findViewById(R.id.image_view_test);
+    RecyclerView recyclerView = view.findViewById(R.id.recycler_view_main);
+    recyclerView.setHasFixedSize(true);
+    GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
+    recyclerView.setLayoutManager(manager);
+    PhotoAdapter photoAdapter = new PhotoAdapter(photoHashSet);
+    recyclerView.setAdapter(photoAdapter);
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
