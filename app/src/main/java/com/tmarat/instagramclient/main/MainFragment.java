@@ -16,13 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.tmarat.instagramclient.R;
-import com.tmarat.instagramclient.model.Photo;
-import com.tmarat.instagramclient.util.ConstantsUtil;
+import com.tmarat.instagramclient.model.Preferences;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
 import static android.app.Activity.RESULT_OK;
 import static com.tmarat.instagramclient.util.ConstantsUtil.REQUEST_TAKE_PHOTO;
@@ -30,12 +29,12 @@ import static com.tmarat.instagramclient.util.ConstantsUtil.REQUEST_TAKE_PHOTO;
 public final class MainFragment extends Fragment implements MainContract.View {
 
   private static final String TAG = MainFragment.class.getSimpleName();
-  private static final int FIRST_ELEMENT = 0;
 
   private MainContract.Presenter presenter;
   private Uri photoURI;
   private ImageView imageView;
-  private ArrayList<Photo> photoList;
+  private Preferences preferences = new Preferences();
+  private HashSet<String> photoHashSet;
 
   public static MainFragment newInstance() {
     return new MainFragment();
@@ -44,12 +43,8 @@ public final class MainFragment extends Fragment implements MainContract.View {
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     presenter = new MainPresenter();
-    photoList = new ArrayList<>();
-
-    if (savedInstanceState != null) {
-      /* Note: get photoList from a bundle */
-      photoList = savedInstanceState.getParcelableArrayList(ConstantsUtil.PHOTO_PARCELABLE_KEY);
-    }
+    preferences = new Preferences();
+    photoHashSet = presenter.getPreferences(getActivity(), preferences);
   }
 
   @NonNull @Override
@@ -77,32 +72,17 @@ public final class MainFragment extends Fragment implements MainContract.View {
         });
 
     imageView = view.findViewById(R.id.image_view_test);
-
-    // TODO: 30.08.2018 get list with URIes and pass to Recycler view which will be in this Fragment
-    //setting image in imageView is for testing
-    if (!photoList.isEmpty()) {
-      imageView.setImageURI(photoList.get(FIRST_ELEMENT).getUri());
-    }
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    Log.d(TAG, "onActivityResult: ");
+
     if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-      /* Note: puts uri to the photo obj and adds to the photoList */
-      Photo photo = new Photo(photoURI, false);
-      photoList.add(photo);
 
-      //setting image in imageView is for testing
-      imageView.setImageURI(photoURI);
-
-      // TODO: 30.08.2018 write uri in database
+      presenter.requestCodeIsOk(preferences, photoURI, getActivity());
     }
   }
 
   @Override public void onSaveInstanceState(@NonNull Bundle outState) {
-    Log.d(TAG, "onSaveInstanceState: ");
-    /* Note: puts the photoList to a bundle */
-    outState.putParcelableArrayList(ConstantsUtil.PHOTO_PARCELABLE_KEY, photoList);
     super.onSaveInstanceState(outState);
   }
 

@@ -52,4 +52,7 @@ dependencies {
   //Room
   implementation "android.arch.persistence.room:runtime:1.1.1"
   annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+
+  //Work Manager
+  implementation "android.arch.work:work-runtime:1.0.0-alpha08"
 }

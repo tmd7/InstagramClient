@@ -7,4 +7,8 @@ public final class ConstantsUtil {
   public static final String THEME_KEY = "theme";
 
   public static final String PHOTO_PARCELABLE_KEY = "photoList";
+
+  public static final String SET_PHOTOS_KEY = "setPhotosKey";
+
+
 }
