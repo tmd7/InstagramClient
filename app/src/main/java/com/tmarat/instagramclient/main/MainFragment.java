@@ -10,19 +10,21 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.tmarat.instagramclient.R;
-import com.tmarat.instagramclient.model.Photo;
-import com.tmarat.instagramclient.util.ConstantsUtil;
+import com.tmarat.instagramclient.main.adapter.PhotoAdapter;
+import com.tmarat.instagramclient.model.Preferences;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
 import static android.app.Activity.RESULT_OK;
 import static com.tmarat.instagramclient.util.ConstantsUtil.REQUEST_TAKE_PHOTO;
@@ -30,12 +32,12 @@ import static com.tmarat.instagramclient.util.ConstantsUtil.REQUEST_TAKE_PHOTO;
 public final class MainFragment extends Fragment implements MainContract.View {
 
   private static final String TAG = MainFragment.class.getSimpleName();
-  private static final int FIRST_ELEMENT = 0;
 
   private MainContract.Presenter presenter;
   private Uri photoURI;
   private ImageView imageView;
-  private ArrayList<Photo> photoList;
+  private Preferences preferences = new Preferences();
+  private HashSet<String> photoHashSet;
 
   public static MainFragment newInstance() {
     return new MainFragment();
@@ -44,12 +46,8 @@ public final class MainFragment extends Fragment implements MainContract.View {
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     presenter = new MainPresenter();
-    photoList = new ArrayList<>();
-
-    if (savedInstanceState != null) {
-      /* Note: get photoList from a bundle */
-      photoList = savedInstanceState.getParcelableArrayList(ConstantsUtil.PHOTO_PARCELABLE_KEY);
-    }
+    preferences = new Preferences();
+    photoHashSet = presenter.getPreferences(getActivity(), preferences);
   }
 
   @NonNull @Override
@@ -76,30 +74,23 @@ public final class MainFragment extends Fragment implements MainContract.View {
           }
         });
 
-    imageView = view.findViewById(R.id.image_view_test);
-
-    //setting image in imageView is for testing
-    if (!photoList.isEmpty()) {
-      imageView.setImageURI(photoList.get(FIRST_ELEMENT).getUri());
-    }
+    RecyclerView recyclerView = view.findViewById(R.id.recycler_view_main);
+    recyclerView.setHasFixedSize(true);
+    GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
+    recyclerView.setLayoutManager(manager);
+    PhotoAdapter photoAdapter = new PhotoAdapter(photoHashSet);
+    recyclerView.setAdapter(photoAdapter);
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    Log.d(TAG, "onActivityResult: ");
-    if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-      /* Note: puts uri to the photo obj and adds to the photoList */
-      Photo photo = new Photo(photoURI, false);
-      photoList.add(photo);
 
-      //setting image in imageView is for testing
-      imageView.setImageURI(photoURI);
+    if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+
+      presenter.requestCodeIsOk(preferences, photoURI, getActivity());
     }
   }
 
   @Override public void onSaveInstanceState(@NonNull Bundle outState) {
-    Log.d(TAG, "onSaveInstanceState: ");
-    /* Note: puts the photoList to a bundle */
-    outState.putParcelableArrayList(ConstantsUtil.PHOTO_PARCELABLE_KEY, photoList);
     super.onSaveInstanceState(outState);
   }
 

@@ -7,11 +7,13 @@
     tools:context=".main.MainActivity"
     >
 
-  <ImageView
-      android:id="@+id/image_view_test"
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recycler_view_main"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      />
+      >
+
+  </android.support.v7.widget.RecyclerView>
 
   <android.support.design.widget.FloatingActionButton
       xmlns:app="http://schemas.android.com/apk/res-auto"
