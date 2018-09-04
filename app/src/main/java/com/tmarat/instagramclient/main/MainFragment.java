@@ -109,10 +109,10 @@ public final class MainFragment extends Fragment implements MainContract.View {
       // Continue only if the File was successfully created
       if (photoFile != null) {
         photoURI = FileProvider.getUriForFile(getActivity(),
-            getActivity().getPackageName() + ".fileprovider",
-            photoFile);
+             getString(R.string.authority), photoFile);
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
         startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+        Log.d(TAG, "dispatchTakePictureIntent: " + getActivity().getPackageName());
       }
     }
   }
