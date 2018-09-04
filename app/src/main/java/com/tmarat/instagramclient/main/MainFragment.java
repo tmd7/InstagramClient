@@ -3,7 +3,6 @@ package com.tmarat.instagramclient.main;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,8 +21,6 @@ import com.tmarat.instagramclient.main.adapter.PhotoAdapter;
 import com.tmarat.instagramclient.model.Preferences;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashSet;
 
 import static android.app.Activity.RESULT_OK;
@@ -104,7 +101,7 @@ public final class MainFragment extends Fragment implements MainContract.View {
       // Create the File where the photo should go
       File photoFile = null;
       try {
-        photoFile = createImageFile();
+        photoFile = presenter.onCreateImageFile(getActivity());
       } catch (IOException ex) {
         showSnackbar(R.string.error);
       }
@@ -118,23 +115,6 @@ public final class MainFragment extends Fragment implements MainContract.View {
         startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
       }
     }
-  }
-
-  private File createImageFile() throws IOException {
-    Log.d(TAG, "createImageFile: ");
-    // Create an image file name
-    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-    String imageFileName = "JPEG_" + timeStamp + "_";
-    File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-    File image = File.createTempFile(
-        imageFileName,
-        ".jpg",
-        storageDir
-    );
-
-    // Save a file: path for use with ACTION_VIEW intents
-    //mCurrentPhotoPath = image.getAbsolutePath();
-    return image;
   }
 
   @Override public void showSnackbar(int resId) {

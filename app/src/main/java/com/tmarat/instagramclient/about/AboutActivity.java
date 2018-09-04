@@ -66,6 +66,7 @@ public class AboutActivity extends BaseActivity {
 
       //here constraint is the name of view to which we are applying the constraintSet
       constraintSet.applyTo(constraintLayout);
+
     }
   }
 }

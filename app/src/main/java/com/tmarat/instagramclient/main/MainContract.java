@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentActivity;
 import com.tmarat.instagramclient.base.BaseMvpPresenter;
 import com.tmarat.instagramclient.base.BaseView;
 import com.tmarat.instagramclient.model.Preferences;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 
 public interface MainContract {
@@ -23,5 +25,7 @@ public interface MainContract {
 
     HashSet<String> getPreferences(FragmentActivity activity,
         Preferences preferences);
+
+    File onCreateImageFile(FragmentActivity activity) throws IOException;
   }
 }
