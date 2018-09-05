@@ -7,16 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import com.squareup.picasso.Picasso;
 import com.tmarat.instagramclient.R;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.MyViewHolder> {
 
-  private String[] arrayPhoto;
+  private ArrayList<Uri> photoNames;
 
-  public PhotoAdapter(HashSet hashSetPhoto) {
-    arrayPhoto = new String[hashSetPhoto.size()];
-    hashSetPhoto.toArray(arrayPhoto);
+  public PhotoAdapter(ArrayList<Uri> photoNames) {
+    this.photoNames = photoNames;
   }
 
   @NonNull @Override
@@ -29,11 +29,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.MyViewHolder
   }
 
   @Override public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-    holder.imageView.setImageURI(Uri.parse(arrayPhoto[position]));
+    Picasso.get().load(photoNames.get(position)).into(holder.imageView);
   }
 
   @Override public int getItemCount() {
-    return arrayPhoto.length;
+    return photoNames.size();
   }
 
   public static class MyViewHolder extends RecyclerView.ViewHolder {

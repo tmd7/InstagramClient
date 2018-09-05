@@ -3,7 +3,6 @@ package com.tmarat.instagramclient.main;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,12 +18,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.tmarat.instagramclient.R;
 import com.tmarat.instagramclient.main.adapter.PhotoAdapter;
-import com.tmarat.instagramclient.model.Preferences;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 import static com.tmarat.instagramclient.util.ConstantsUtil.REQUEST_TAKE_PHOTO;
@@ -36,8 +32,6 @@ public final class MainFragment extends Fragment implements MainContract.View {
   private MainContract.Presenter presenter;
   private Uri photoURI;
   private ImageView imageView;
-  private Preferences preferences = new Preferences();
-  private HashSet<String> photoHashSet;
 
   public static MainFragment newInstance() {
     return new MainFragment();
@@ -46,8 +40,6 @@ public final class MainFragment extends Fragment implements MainContract.View {
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     presenter = new MainPresenter();
-    preferences = new Preferences();
-    photoHashSet = presenter.getPreferences(getActivity(), preferences);
   }
 
   @NonNull @Override
@@ -55,8 +47,11 @@ public final class MainFragment extends Fragment implements MainContract.View {
       @Nullable Bundle savedInstanceState) {
 
     View view = inflater.inflate(R.layout.fragment_main, container, false);
+
     presenter.attach(this);
     initUI(view);
+
+
     return view;
   }
 
@@ -76,9 +71,10 @@ public final class MainFragment extends Fragment implements MainContract.View {
 
     RecyclerView recyclerView = view.findViewById(R.id.recycler_view_main);
     recyclerView.setHasFixedSize(true);
-    GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
+    GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
     recyclerView.setLayoutManager(manager);
-    PhotoAdapter photoAdapter = new PhotoAdapter(photoHashSet);
+    ArrayList<Uri> photoNames = presenter.onGetPhotoFileNames(getActivity());
+    PhotoAdapter photoAdapter = new PhotoAdapter(photoNames);
     recyclerView.setAdapter(photoAdapter);
   }
 
@@ -86,7 +82,6 @@ public final class MainFragment extends Fragment implements MainContract.View {
 
     if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
 
-      presenter.requestCodeIsOk(preferences, photoURI, getActivity());
     }
   }
 
@@ -104,7 +99,7 @@ public final class MainFragment extends Fragment implements MainContract.View {
       // Create the File where the photo should go
       File photoFile = null;
       try {
-        photoFile = createImageFile();
+        photoFile = presenter.onCreateImageFile(getActivity());
       } catch (IOException ex) {
         showSnackbar(R.string.error);
       }
@@ -112,29 +107,12 @@ public final class MainFragment extends Fragment implements MainContract.View {
       // Continue only if the File was successfully created
       if (photoFile != null) {
         photoURI = FileProvider.getUriForFile(getActivity(),
-            getActivity().getPackageName() + ".fileprovider",
-            photoFile);
+             getString(R.string.authority), photoFile);
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
         startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+        Log.d(TAG, "dispatchTakePictureIntent: " + photoURI);
       }
     }
-  }
-
-  private File createImageFile() throws IOException {
-    Log.d(TAG, "createImageFile: ");
-    // Create an image file name
-    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-    String imageFileName = "JPEG_" + timeStamp + "_";
-    File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-    File image = File.createTempFile(
-        imageFileName,
-        ".jpg",
-        storageDir
-    );
-
-    // Save a file: path for use with ACTION_VIEW intents
-    //mCurrentPhotoPath = image.getAbsolutePath();
-    return image;
   }
 
   @Override public void showSnackbar(int resId) {

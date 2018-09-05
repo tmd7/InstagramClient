@@ -18,4 +18,5 @@
   <string name="error">Error</string>
   <string name="theme_has_changed">Theme has changed</string>
   <string name="about">About</string>
+  <string name="authority">com.tmarat.instagramclient.fileprovider</string>
 </resources>
