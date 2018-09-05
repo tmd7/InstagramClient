@@ -18,10 +18,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.tmarat.instagramclient.R;
 import com.tmarat.instagramclient.main.adapter.PhotoAdapter;
-import com.tmarat.instagramclient.model.Preferences;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 import static com.tmarat.instagramclient.util.ConstantsUtil.REQUEST_TAKE_PHOTO;
@@ -33,8 +32,6 @@ public final class MainFragment extends Fragment implements MainContract.View {
   private MainContract.Presenter presenter;
   private Uri photoURI;
   private ImageView imageView;
-  private Preferences preferences = new Preferences();
-  private HashSet<String> photoHashSet;
 
   public static MainFragment newInstance() {
     return new MainFragment();
@@ -43,8 +40,6 @@ public final class MainFragment extends Fragment implements MainContract.View {
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     presenter = new MainPresenter();
-    preferences = new Preferences();
-    photoHashSet = presenter.getPreferences(getActivity(), preferences);
   }
 
   @NonNull @Override
@@ -52,8 +47,11 @@ public final class MainFragment extends Fragment implements MainContract.View {
       @Nullable Bundle savedInstanceState) {
 
     View view = inflater.inflate(R.layout.fragment_main, container, false);
+
     presenter.attach(this);
     initUI(view);
+
+
     return view;
   }
 
@@ -75,7 +73,8 @@ public final class MainFragment extends Fragment implements MainContract.View {
     recyclerView.setHasFixedSize(true);
     GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
     recyclerView.setLayoutManager(manager);
-    PhotoAdapter photoAdapter = new PhotoAdapter(photoHashSet);
+    ArrayList<Uri> photoNames = presenter.onGetPhotoFileNames(getActivity());
+    PhotoAdapter photoAdapter = new PhotoAdapter(photoNames);
     recyclerView.setAdapter(photoAdapter);
   }
 
@@ -83,7 +82,6 @@ public final class MainFragment extends Fragment implements MainContract.View {
 
     if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
 
-      presenter.requestCodeIsOk(preferences, photoURI, getActivity());
     }
   }
 
@@ -112,7 +110,7 @@ public final class MainFragment extends Fragment implements MainContract.View {
              getString(R.string.authority), photoFile);
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
         startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-        Log.d(TAG, "dispatchTakePictureIntent: " + getActivity().getPackageName());
+        Log.d(TAG, "dispatchTakePictureIntent: " + photoURI);
       }
     }
   }

@@ -4,10 +4,9 @@ import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import com.tmarat.instagramclient.base.BaseMvpPresenter;
 import com.tmarat.instagramclient.base.BaseView;
-import com.tmarat.instagramclient.model.Preferences;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public interface MainContract {
 
@@ -20,12 +19,8 @@ public interface MainContract {
   // User actions. Presenter will implement
   interface Presenter extends BaseMvpPresenter<MainContract.View> {
 
-    void requestCodeIsOk(Preferences preferences, Uri photoURI,
-        FragmentActivity activity);
-
-    HashSet<String> getPreferences(FragmentActivity activity,
-        Preferences preferences);
-
     File onCreateImageFile(FragmentActivity activity) throws IOException;
+
+    ArrayList<Uri> onGetPhotoFileNames(FragmentActivity activity);
   }
 }
