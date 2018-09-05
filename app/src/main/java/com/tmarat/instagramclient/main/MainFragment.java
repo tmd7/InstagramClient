@@ -71,7 +71,7 @@ public final class MainFragment extends Fragment implements MainContract.View {
 
     RecyclerView recyclerView = view.findViewById(R.id.recycler_view_main);
     recyclerView.setHasFixedSize(true);
-    GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
+    GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
     recyclerView.setLayoutManager(manager);
     ArrayList<Uri> photoNames = presenter.onGetPhotoFileNames(getActivity());
     PhotoAdapter photoAdapter = new PhotoAdapter(photoNames);
