@@ -3,7 +3,9 @@ package com.tmarat.instagramclient.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -12,11 +14,15 @@ import android.view.MenuItem;
 import com.tmarat.instagramclient.R;
 import com.tmarat.instagramclient.about.AboutActivity;
 import com.tmarat.instagramclient.base.BaseActivity;
+import com.tmarat.instagramclient.main.tabs.CustomFragmentPagerAdapter;
+import com.tmarat.instagramclient.main.tabs.TabFragmentFactory;
 import com.tmarat.instagramclient.settings.SettingsFragment;
 import com.tmarat.instagramclient.util.ActivityUtils;
 
 public class MainActivity extends BaseActivity
     implements NavigationView.OnNavigationItemSelectedListener {
+
+  private ViewPager viewPager;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +31,7 @@ public class MainActivity extends BaseActivity
 
     setNavigationDrawer();
 
-    if (savedInstanceState == null) {
-      ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
-          MainFragment.newInstance(), R.id.main_container);
-    }
+    setTabs();
   }
 
   private void setNavigationDrawer() {
@@ -43,6 +46,21 @@ public class MainActivity extends BaseActivity
 
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
+  }
+
+  private void setTabs() {
+    TabFragmentFactory tabFragmentFactory = new TabFragmentFactory();
+    CustomFragmentPagerAdapter adapter =
+        new CustomFragmentPagerAdapter(getSupportFragmentManager(), tabFragmentFactory);
+
+    viewPager = findViewById(R.id.view_pager);
+    viewPager.setAdapter(adapter);
+
+    TabLayout tabLayout = findViewById(R.id.tabs);
+    tabLayout.setupWithViewPager(viewPager);
+
+    viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+    tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
   }
 
   @Override
@@ -77,14 +95,13 @@ public class MainActivity extends BaseActivity
     return super.onOptionsItemSelected(item);
   }
 
-  @SuppressWarnings("StatementWithEmptyBody")
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
     switch (item.getItemId()) {
 
       case R.id.nav_home:
         ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
-            MainFragment.newInstance(), R.id.main_container);
+            MainFragment.newInstance(null), R.id.view_pager);
         break;
 
       case R.id.nav_settings:
@@ -98,7 +115,6 @@ public class MainActivity extends BaseActivity
       default:
         break;
     }
-
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
