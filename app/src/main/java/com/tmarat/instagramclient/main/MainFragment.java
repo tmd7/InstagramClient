@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import com.tmarat.instagramclient.R;
 import com.tmarat.instagramclient.main.adapter.PhotoAdapter;
 import java.io.File;
@@ -28,13 +27,18 @@ import static com.tmarat.instagramclient.util.ConstantsUtil.REQUEST_TAKE_PHOTO;
 public final class MainFragment extends Fragment implements MainContract.View {
 
   private static final String TAG = MainFragment.class.getSimpleName();
+  private static final String KEY = "getArgs";
 
   private MainContract.Presenter presenter;
   private Uri photoURI;
-  private ImageView imageView;
 
-  public static MainFragment newInstance() {
-    return new MainFragment();
+  public static MainFragment newInstance(Bundle bundle) {
+    MainFragment currentFragment = new MainFragment();
+    Bundle args = new Bundle();
+    args.putBundle(KEY, bundle);
+    currentFragment.setArguments(args);
+
+    return currentFragment;
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {

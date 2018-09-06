@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+  <item
+      android:id="@+id/bnv_home_menu"
+      android:icon="@drawable/ic_storage_black_24dp"
+      android:title="Storage"/>
+  <item
+      android:id="@+id/bnv_"
+      android:icon="@drawable/ic_cloud_black_24dp"
+      android:title="Cloud"/>
+  <item
+      android:id="@+id/action_favorites"
+      android:icon="@drawable/ic_all_inclusive_black_24dp"
+      android:title="All inclusive"/>
+
+</menu>
