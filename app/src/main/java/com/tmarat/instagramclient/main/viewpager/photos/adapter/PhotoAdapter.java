@@ -1,4 +1,4 @@
-package com.tmarat.instagramclient.main.adapter;
+package com.tmarat.instagramclient.main.viewpager.photos.adapter;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;

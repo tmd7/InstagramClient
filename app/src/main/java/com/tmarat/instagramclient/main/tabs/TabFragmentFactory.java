@@ -1,7 +1,7 @@
 package com.tmarat.instagramclient.main.tabs;
 
 import android.support.v4.app.Fragment;
-import com.tmarat.instagramclient.main.MainFragment;
+import com.tmarat.instagramclient.main.viewpager.photos.PhotosFragment;
 
 public class TabFragmentFactory {
 
@@ -9,9 +9,9 @@ public class TabFragmentFactory {
 
     public Fragment createFragment(int position) {
         switch (position) {
-            case 0: return MainFragment.newInstance(null);
-            case 1: return MainFragment.newInstance(null);
-            case 2: return MainFragment.newInstance(null);
+            case 0: return PhotosFragment.newInstance(null);
+            case 1: return PhotosFragment.newInstance(null);
+            case 2: return PhotosFragment.newInstance(null);
             default: throw new IllegalArgumentException("Could not create fragment for position " + position);
         }
     }
