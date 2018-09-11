@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import com.tmarat.instagramclient.R;
 import com.tmarat.instagramclient.about.AboutActivity;
 import com.tmarat.instagramclient.base.BaseActivity;
-import com.tmarat.instagramclient.main.viewpager.ViewPagerFragment;
 import com.tmarat.instagramclient.settings.SettingsFragment;
 import com.tmarat.instagramclient.util.ActivityUtils;
 
@@ -24,10 +23,23 @@ public class MainActivity extends BaseActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
-        MainFragment.newInstance(null), R.id.main_container);
-
     setNavigationDrawer();
+
+    if (savedInstanceState == null) {
+      startMainFragment();
+    }
+  }
+
+  @Override protected void onResume() {
+    super.onResume();
+    startMainFragment();
+  }
+
+  private void startMainFragment() {
+    ActivityUtils.replaceFragmentToActivity(
+        getSupportFragmentManager(),
+        MainFragment.newInstance(null),
+        R.id.main_container);
   }
 
   private void setNavigationDrawer() {
@@ -66,7 +78,7 @@ public class MainActivity extends BaseActivity
     switch (item.getItemId()) {
       case R.id.action_settings:
         ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
-            SettingsFragment.newInstance(), R.id.main_fragment_container);
+            SettingsFragment.newInstance(), R.id.main_container);
         break;
 
       default:
@@ -82,12 +94,12 @@ public class MainActivity extends BaseActivity
 
       case R.id.nav_home:
         ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
-            ViewPagerFragment.newInstance(null), R.id.main_fragment_container);
+            MainFragment.newInstance(null), R.id.main_container);
         break;
 
       case R.id.nav_settings:
         ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
-            SettingsFragment.newInstance(), R.id.main_fragment_container);
+            SettingsFragment.newInstance(), R.id.main_container);
         break;
 
       case R.id.nav_about:
