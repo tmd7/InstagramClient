@@ -14,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 import com.tmarat.instagramclient.R;
+import com.tmarat.instagramclient.model.Preferences;
 import com.tmarat.instagramclient.settings.adapter.RecyclerViewClickListener;
 import com.tmarat.instagramclient.settings.adapter.ThemeAdapter;
 import com.tmarat.instagramclient.util.ThemeUtil;
@@ -69,16 +70,26 @@ public final class SettingsFragment extends Fragment implements SettingsContract
         new RecyclerViewClickListener() {
           @Override public void onClick(int position) {
 
-            presenter.onClickItemRecyclerView(getActivity(), position);
+            presenter.onClickItemRecyclerView(position);
           }
         });
 
     recyclerView.setAdapter(adapter);
   }
 
+  @Override public void recreateActivity() {
+    if (getActivity() != null) {
+      getActivity().recreate();
+    }
+  }
+
   @Override public void showToast(int reId) {
     Toast t = Toast.makeText(getContext(), reId, Toast.LENGTH_LONG);
     t.setGravity(Gravity.CENTER, 0, 0);
     t.show();
+  }
+
+  @Override public void onChangeAppTheme(int position) {
+    new Preferences().setPreferences(getActivity(), ThemeUtil.getThemeId(position));
   }
 }

@@ -1,4 +1,4 @@
-package com.tmarat.instagramclient.main.viewpager.photos.adapter;
+package com.tmarat.instagramclient.main.adapter;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -29,7 +29,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.MyViewHolder
   }
 
   @Override public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-    Picasso.get().load(photoNames.get(position)).into(holder.imageView);
+    Picasso.get()
+        .load(photoNames.get(position))
+        .resize(600, 600)
+        .centerInside()
+        .into(holder.imageView);
   }
 
   @Override public int getItemCount() {

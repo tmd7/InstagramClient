@@ -1,10 +1,8 @@
 package com.tmarat.instagramclient.main;
 
-import android.support.v4.app.FragmentActivity;
 import com.tmarat.instagramclient.base.BaseMvpPresenter;
 import com.tmarat.instagramclient.base.BaseView;
 import java.io.File;
-import java.io.IOException;
 
 public interface MainContract {
 
@@ -12,11 +10,17 @@ public interface MainContract {
   interface View extends BaseView {
 
     void showSnackbar(int resId);
+
+    void dispatchTakePictureIntent(File image);
+
+    void onSetAdapterRecyclerView(File[] arrayFiles);
   }
 
   // User actions. Presenter will implement
   interface Presenter extends BaseMvpPresenter<MainContract.View> {
 
-    File onCreateImageFile(FragmentActivity activity) throws IOException;
+    void onFabClicked(File storageDir);
+
+    void onCreatedView(File storageDir);
   }
 }

@@ -8,8 +8,8 @@
     tools:context=".main.MainActivity"
     >
 
-  <FrameLayout
-      android:id="@+id/main_fragment_container"
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recycler_view_main_fragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       />
