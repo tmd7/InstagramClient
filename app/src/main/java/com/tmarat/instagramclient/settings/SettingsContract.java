@@ -9,7 +9,11 @@ public interface SettingsContract {
   // Action callbacks. Activity/Fragment will implement
   interface View extends BaseView {
 
-    void showToast(int reId);
+    void recreateActivity();
+
+    void showToast(int resId);
+
+    void onChangeAppTheme(int position);
   }
 
   // User actions. Presenter will implement
@@ -17,6 +21,6 @@ public interface SettingsContract {
 
     void onChangedSwitchState();
 
-    void onClickItemRecyclerView(FragmentActivity activity, int position);
+    void onClickItemRecyclerView(int position);
   }
 }
