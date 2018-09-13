@@ -1,6 +1,7 @@
 package com.tmarat.instagramclient.main;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,10 +28,15 @@ public final class MainFragment extends Fragment implements MainContract.View {
 
   private static final String TAG = MainFragment.class.getSimpleName();
   private static final String KEY = "getArgs";
+  private static final int SPAN_COUNT_PORTRAIT = 2;
+  private static final int SPAN_COUNT_LAND = 3;
 
   private MainContract.Presenter presenter;
-
   private RecyclerView recyclerView;
+
+  private int getOrientation() {
+    return getResources().getConfiguration().orientation;
+  }
 
   public static MainFragment newInstance(Bundle bundle) {
     MainFragment currentFragment = new MainFragment();
@@ -70,8 +76,18 @@ public final class MainFragment extends Fragment implements MainContract.View {
   private void initRecyclerView(View view) {
     recyclerView = view.findViewById(R.id.recycler_view_main_fragment);
     recyclerView.setHasFixedSize(true);
-    GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
-    recyclerView.setLayoutManager(manager);
+
+    GridLayoutManager manager;
+
+    if (getOrientation() == Configuration.ORIENTATION_PORTRAIT) {
+
+      manager = new GridLayoutManager(getContext(), SPAN_COUNT_PORTRAIT);
+      recyclerView.setLayoutManager(manager);
+    } else {
+
+      manager = new GridLayoutManager(getContext(), SPAN_COUNT_LAND);
+      recyclerView.setLayoutManager(manager);
+    }
   }
 
   @Override public void onDestroy() {
@@ -103,7 +119,7 @@ public final class MainFragment extends Fragment implements MainContract.View {
 
     // Ensure that there's a camera activity to handle the intent
     if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null
-        && image !=null) {
+        && image != null) {
 
       Uri photoURI = FileProvider.getUriForFile(getActivity(),
           getString(R.string.authority), image);
@@ -117,8 +133,10 @@ public final class MainFragment extends Fragment implements MainContract.View {
     ArrayList<Uri> uriPhotoList = new ArrayList<>();
 
     if (getActivity() != null) {
-      for (File f: arrayFiles) {
-        Uri photoURI = FileProvider.getUriForFile(getActivity(), getActivity().getString(R.string.authority), f);
+      for (File f : arrayFiles) {
+        Uri photoURI =
+            FileProvider.getUriForFile(getActivity(), getActivity().getString(R.string.authority),
+                f);
         uriPhotoList.add(photoURI);
       }
     }
@@ -130,8 +148,6 @@ public final class MainFragment extends Fragment implements MainContract.View {
   @Override public void onSaveInstanceState(@NonNull Bundle outState) {
     super.onSaveInstanceState(outState);
   }
-
-
 
   @Override public void showSnackbar(int resId) {
     if (getView() != null) {
